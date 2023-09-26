@@ -30,3 +30,19 @@ class Home(Resource):
         return response
 api.add_resource(Home, '/')
 
+class Restaurants(Resource):
+    def get(self):
+        #initialize an empty list
+        restaurants = []
+        for restaurant  in Restaurant.query.all():
+            #resturant_dict is used to store information about a single restaurant 
+            restaurant_dict={
+                "id": restaurant.id,
+                "name": restaurant.name,
+                "address": restaurant.address
+            }
+            restaurants.append(restaurant_dict)
+        return make_response(jsonify(restaurants), 200)
+
+api.add_resource(Restaurants,'/restaurants')  
+ 
