@@ -72,4 +72,9 @@ ingredients = [
 ]
 
 fake = Faker()
-
+# a context manager to ensure database operations occur within the application context
+with app.app_context():
+    #delete existing data from tables
+    db.session.query(RestaurantPizza).delete()
+    db.session.query(Restaurant).delete()
+    db.session.query(Pizza).delete()
