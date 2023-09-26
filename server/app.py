@@ -2,7 +2,7 @@ from flask import Flask, make_response,jsonify,request
 from flask_migrate import Migrate
 from flask_restful import Api,Resource
 from models import db, Restaurant, Pizza, RestaurantPizza
-from werkzeug.exceptions import NotFound
+# from werkzeug.exceptions import NotFound
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'#specifies the URI for the sqlite database
@@ -83,4 +83,92 @@ class Pizzas(Resource):
             pizzas.append(pizza_dict)
         return make_response(jsonify(pizzas), 200)
 api.add_resource(Pizzas, '/pizzas')
+
+class RestaurantPizzas(Resource):
+    def post(self):
+        data = request.get_json()#retrieve json data from the http request body
+
+        # Validate that the required fields are present in the request
+        if not all(key in data for key in ("price", "pizza_id", "restaurant_id")):
+            return make_response(jsonify({"errors": ["validation errors.include all keys"]}), 400)
+
+        price = data["price"]
+        pizza_id = data["pizza_id"]
+        restaurant_id = data["restaurant_id"]
+
+        # Check if the Pizza and Restaurant exist in the database based on their respective ids
+        pizza = Pizza.query.get(pizza_id)
+        restaurant = Restaurant.query.get(restaurant_id)
+
+        if not pizza or not restaurant:
+            return make_response(jsonify({"errors": ["validation errors pizza and restaurant dont exist"]}), 400)
+
+        # Create a new RestaurantPizza
+        restaurant_pizza = RestaurantPizza(
+            price = data["price"],
+            pizza_id = data["pizza_id"],
+            restaurant_id = data["restaurant_id"]
+
+        )
+
+        db.session.add(restaurant_pizza)
+        db.session.commit()
+
+        # Return data related to the Pizza
+        pizza_data = {
+            "id": pizza.id,
+            "name": pizza.name,
+            "ingredients": pizza.ingredients
+        }
+
+        return make_response(jsonify(pizza_data), 201)
+api.add_resource(RestaurantPizzas,'/restaurant_pizzas')   
+ 
+# @app.errorhandler(NotFound)
+# def handle_not_found(e):
+#     response = make_response(
+#         "Not Found: The requested resource does not exist.",
+#         404
+#     )
+#     return response
+
+
+if __name__ == '__main__':
+    app.run(port=5555, debug=True)
+        
+
+        
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
