@@ -89,4 +89,18 @@ with app.app_context():
         
     db.session.add_all(restaurants)
     db.session.commit()
-   
+    #initialize an empty list
+    pizzas = []
+    for i in range(100):
+        p = Pizza(
+            #get a random ingredient from the ingredient list to be used as the name of the pizza
+            name =rc(ingredients),
+            #create a random list of 3 ingredients joined to a single string
+            ingredients =','.join(sample(ingredients,3)),            
+        )
+        pizzas.append(p)
+        
+    db.session.add_all(pizzas)
+    db.session.commit()
+    
+    
