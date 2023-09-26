@@ -42,8 +42,17 @@ class Restaurants(Resource):
                 "address": restaurant.address
             }
             restaurants.append(restaurant_dict)
-            
         return make_response(jsonify(restaurants), 200)
 
 api.add_resource(Restaurants,'/restaurants')  
  
+class RestaurantByID(Resource):
+
+    def get(self, id):
+        restaurant = Restaurant.query.filter_by(id=id).first()
+        if restaurant:
+            restaurant_dict=restaurant.to_dict()
+            return make_response(jsonify(restaurant_dict), 200)
+        else:
+            return make_response(jsonify({"error": "Restaurant not found"}), 404)
+
