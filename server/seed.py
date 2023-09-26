@@ -103,4 +103,14 @@ with app.app_context():
     db.session.add_all(pizzas)
     db.session.commit()
     
-    
+    restaurant_pizzas = []
+    for i in range(10) : 
+        rp =  RestaurantPizza(
+            name=fake.unique.company(), #generate a unique company name using faker 
+            price=random.randint(1, 30),#generate a random price   
+            pizza_id=rc(pizzas).id, #select a random pizza object from the pizza list 
+            restaurant_id=rc(restaurants).id)   #select a random restaurant object from the restaurants list 
+        restaurant_pizzas.append(rp)
+     
+    db.session.add_all(restaurant_pizzas)
+    db.session.commit()
