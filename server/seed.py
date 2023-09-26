@@ -78,3 +78,15 @@ with app.app_context():
     db.session.query(RestaurantPizza).delete()
     db.session.query(Restaurant).delete()
     db.session.query(Pizza).delete()
+    #initialize an empty list
+    restaurants = []
+    for i in range(100):
+        r = Restaurant(
+            name = fake.company(),
+            address = fake.address()
+        )
+        restaurants.append(r)
+        
+    db.session.add_all(restaurants)
+    db.session.commit()
+   
