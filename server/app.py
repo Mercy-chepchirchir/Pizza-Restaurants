@@ -42,6 +42,7 @@ class Restaurants(Resource):
                 "address": restaurant.address
             }
             restaurants.append(restaurant_dict)
+            
         return make_response(jsonify(restaurants), 200)
 
 api.add_resource(Restaurants,'/restaurants')  
