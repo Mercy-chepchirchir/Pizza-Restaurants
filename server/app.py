@@ -100,6 +100,7 @@ class RestaurantPizzas(Resource):
         pizza = Pizza.query.get(pizza_id)
         restaurant = Restaurant.query.get(restaurant_id)
 
+
         if not pizza or not restaurant:
             return make_response(jsonify({"errors": ["validation errors pizza and restaurant dont exist"]}), 400)
 
