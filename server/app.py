@@ -62,7 +62,7 @@ class RestaurantByID(Resource):
         if restaurant:
             db.session.delete(restaurant)
             db.session.commit()
-            return make_response("", 204)
+            return make_response(jsonify({"message":"Restaurant succesfully deleted"}), 204)
         else:
             return make_response(jsonify({"error": "Restaurant not found"}), 404)
 
