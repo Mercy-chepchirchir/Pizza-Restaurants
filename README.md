@@ -13,8 +13,7 @@ The Pizza Restaurant API is a Flask-based web service that allows users to inter
 
 # INSTALLATION PROCESS
 
-* Git clone the repository to your local machine using the command `https://github.com/Mercy-chepchirchir/Pizza-Restaurants`
-* Navigate to the code challenge directory using `cd Pizza-Restaurants `
+* Git clone the repository to your local machine using the command `https://pizza-restaurant-rr4m.onrender.com`
 * To install the necessary dependencies run `pipenv install`,`pip install sqlalchemy`,`pip install flask`,`pip install flask-migrate`,`pip install sqlalchemy_serializer `
 * Install the requirement packages using pip
 `pip install sqlalchemy faker`
@@ -37,8 +36,13 @@ The API exposes the following routes:
 * GET /pizzas: Returns a list of pizzas in JSON format.
 * POST /restaurant_pizzas: Creates a new restaurant-pizza association.
 
+# TESTING
+Test the implemented endpoints using postman and ensure they function as specified.
+
 # TECHNOLOGY USED
 python
+Flask
+SQLAlchemy
 
 
 # LICENSE
